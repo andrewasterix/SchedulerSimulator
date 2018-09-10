@@ -29,19 +29,19 @@ simulator: simulator.c scheduler.o list_data.o input.o option.o error.o
 all: error.o list_data.o input.o option.o simulator
 
 test1: all
-	./simulator -op out_pree_1.csv -on out_no_pree_1.csv -i 01_tasks.csv
+	./simulator -op out_pree_1.csv -on out_no_pree_1.csv -i /Inputfile/01_tasks.csv
 
 test2: all
-	./simulator -op out_pree_2.csv -on out_no_pree_2.csv -i 02_tasks.csv
+	./simulator -op out_pree_2.csv -on out_no_pree_2.csv -i /Inputfile/02_tasks.csv
 
 test3: all
-	./simulator -op out_pree_3.csv -on out_no_pree_3.csv -i 03_tasks.csv
+	./simulator -op out_pree_3.csv -on out_no_pree_3.csv -i /Inputfile/03_tasks.csv
 
 test4: all
-	./simulator -op out_pree_4.csv -on out_no_pree_4.csv -i 04_tasks.csv
+	./simulator -op out_pree_4.csv -on out_no_pree_4.csv -i /Inputfile/04_tasks.csv
 
 test5: all
-	./simulator -op out_pree_5.csv -on out_no_pree_5.csv -i 05_tasks.csv
+	./simulator -op out_pree_5.csv -on out_no_pree_5.csv -i /Inputfile/05_tasks.csv
 
 test: test1 test2 test3 test4 test5
 
