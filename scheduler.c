@@ -50,19 +50,19 @@ void change_state(Task_t* Task, int core, int clock, char* output_file){
 
     switch(Task->ProcessState){
         case 1: // NEW
-            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "NEW");
+            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "new");
         break;
         case 2: // READY
-            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "READY");
+            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "ready");
         break;
         case 3: // RUNNING
-            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "RUNNING");
+            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "runing");
         break;
         case 4: // BLOCKED
-            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "BLOCKED");
+            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "blocked");
         break;
         case 5: // EXIT
-            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "EXIT");
+            fprintf(output_file_w, "core%d, %d, %d, %s\n", core, clock, Task->id_task, "exit");
         break;
         default:
         break;
