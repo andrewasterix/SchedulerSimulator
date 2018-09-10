@@ -12,28 +12,6 @@
 #include "option.c"
 #include "scheduler.c"
 
-
-void print_file(Task_t* Task, FILE* output_file){
-
-    Instruction_t* Temp;
-
-    //FILE* output_file_w = fopen(output_file, "w");
-    for(Temp = Task->instr_List->head_Instr; Temp != NULL; Temp = Temp->next)
-        fprintf(output_file, "Istr: %d, %d\n", Temp->type_flag, Temp->length);
-}
-
-void print_queue_file(Queue_t* Queue, char* output_file){
-    
-    Task_t* Temp;
-
-    FILE* output_file_w = fopen(output_file, "w");
-
-    for(Temp = Queue->first_in; Temp != NULL; Temp = Temp->next){
-        fprintf(output_file_w, "Task: %d, %d\n", Temp->id_task, Temp->arrival_time_task);
-        print_file(Temp, output_file_w);
-    }
-}
-
 int main(int argc, char* argv[])
 {   
     pid_t Pid = fork();
@@ -61,13 +39,13 @@ int main(int argc, char* argv[])
     parsing_input(Queue, input_file); 
 
     if(Pid == 0){
-        scheduling(Queue, output_pree, false); 
+        scheduling(Queue, output_pree, false); // PREEMPRIVE SIMULATION
     }else{
-        scheduling(Queue, output_no_pree, true);
+        scheduling(Queue, output_no_pree, true); // NO-PREEMPTIVE SIMULATION
     }
 
     if(Pid != 0){
-        waitpid(Pid, NULL, 0);
+        waitpid(Pid, NULL, 0); // WAIT UNTIL ALL PROCESS END
     }
     
     free(Queue);

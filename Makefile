@@ -49,4 +49,3 @@ clean:
 	rm -f *.o
 	rm -f simulator
 	rm -f *.csv
-	

@@ -30,7 +30,7 @@ struct List_Instruction{
 struct Task{
     int arrival_time_task;
     int id_task;
-    int ProcessState; // Stato di avanzamento del Task Da 1 a 5;
+    int ProcessState; // Task Process State from 1 "new" to 5 "exit"
     int BLOCKING_TIME;
     List_Instruction_t* instr_List;
     Instruction_t* Program_Counter;
@@ -93,7 +93,6 @@ Task_t* new_Task_node (int id_task, int arrival_time_task){
 
     new_node_Task->instr_List = new_node_list;
     
-    //free(new_node_list); VALGRIND ERROR MEMORY: SEGMENTATION FAULT CORE DUMP
     return new_node_Task;
 }
 
@@ -220,7 +219,6 @@ void pop_at_Queue(Queue_t* Queue,Task_t* Task){
                     }
                     
                     free(Temp_task_1);
-                    //printf("%s\n", Node_Erase);
                     break;
                 }
             }
@@ -257,7 +255,6 @@ void pop_at_tasks(Task_t* Task, Instruction_t* Instruction){
                         Temp_Instruction_2->next = Temp_Instruction_1->next;
                     }
 
-                //printf("%s\n", Node_Erase);
                 free(Temp_Instruction_1);
                 free(Temp_Instruction_2);            
                 break;

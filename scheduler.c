@@ -220,7 +220,7 @@ void* schedule(void* Sched_Info){
                 
             }else if(!IsEmpty(blocked_queue)){
                 
-                if(blocked_queue->first_in->BLOCKING_TIME <= clock){
+                if(blocked_queue->first_in->BLOCKING_TIME <= clock){ // BLOCKED -> READY
                     
                     blocked_queue->first_in->ProcessState = 2;
                     blocked_queue->first_in->instr_List->head_Instr->type_flag = false;
@@ -255,8 +255,8 @@ void* schedule(void* Sched_Info){
                 Instruction_t* tmp = ready_queue->first_in->instr_List->head_Instr;
                 pthread_mutex_unlock(&mutex);
 
-                if(!tmp->type_flag){
-                    ready_queue->first_in->ProcessState = 3;
+                if(!tmp->type_flag){ // No BLOCKING INSTRUCTION
+                    ready_queue->first_in->ProcessState = 3; // READY -> RUNNING
                     change_state(ready_queue->first_in,Sched_info->core_number,clock,Sched_info->output_file);
 
                     int EXEC_TIME = tmp->length + clock;
@@ -271,9 +271,9 @@ void* schedule(void* Sched_Info){
                         }
                     }
 
-                    if(EXEC_TIME <= EXEC_QUANTUM){
+                    if(EXEC_TIME <= EXEC_QUANTUM){ // BREAK FOR QUANTUM
                         pop_at_tasks(ready_queue->first_in, ready_queue->first_in->instr_List->head_Instr);      
-                        if(tmp->next == NULL){
+                        if(tmp->next == NULL){ // RUNNING -> EXIT
                             ready_queue->first_in->ProcessState = 5;
                             change_state(ready_queue->first_in,Sched_info->core_number,clock,Sched_info->output_file);
                             pop_at_Queue(ready_queue, ready_queue->first_in);
@@ -292,8 +292,8 @@ void* schedule(void* Sched_Info){
                     pop_at_Queue(ready_queue, ready_queue->first_in);  
                                         
                     
-                }else{
-                    ready_queue->first_in->ProcessState = 4;
+                }else{ // BLOCKED INSTRUCTION
+                    ready_queue->first_in->ProcessState = 4; // READY -> BLOCKED
                     change_state(ready_queue->first_in,Sched_info->core_number,clock,Sched_info->output_file);
 
                     ready_queue->first_in->BLOCKING_TIME = clock + tmp->length;
@@ -337,14 +337,14 @@ void scheduling(Queue_t* Queue, char* file_name, bool type_sched){
         Scheduler[i].core_number = i;
       
         
-        if (pthread_create(&thread[i], NULL, &schedule, &Scheduler[i]) != 0) {
+        if (pthread_create(&thread[i], NULL, &schedule, &Scheduler[i]) != 0) { // THREAD AS CPU CORE
             fprintf(stderr,"%s\n", Thread_Error);
             exit(1);
         }
     }
     
     for(int i = 0; i < core; i++){
-        pthread_join(thread[i], NULL);
+        pthread_join(thread[i], NULL); // WAIT UNTIL ALL CORE END
     }
 
 }
